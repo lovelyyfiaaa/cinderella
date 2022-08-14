@@ -1,7 +1,8 @@
-use cinderella::{app::App, init_terminal, confirm::ConfirmArgsBuilder};
+use cinderella::embedded::{app::App, confirm::ConfirmArgsBuilder};
 use clap::{arg, Command};
 use std::{path::PathBuf, process::exit};
-
+use cinderella::terminal::backend::auto::Auto;
+ use cinderella::terminal::interface::Backend;
 fn cli() -> Command<'static> {
     Command::new("clinderella")
         .about("Make beautiful CLI apps that are as beautiful as Cinderella!!! 💖✨✨")
@@ -38,7 +39,7 @@ fn cli() -> Command<'static> {
 
 fn main() {
     let matches = cli().get_matches();
-    let mut terminal = init_terminal().unwrap();
+    let mut terminal = Auto::init_terminal().unwrap();
     let mut app = App::default();
     match matches.subcommand() {
         Some(("confirm", _sub_matches)) => {

@@ -1,0 +1,15 @@
+[package]
+name = "cinderella-embedded"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+crossterm = { version = "0.24.0",  optional = true }
+tui = { version = "0.18", default-features = false }
+termion = { version = "1.5.6", optional = true }
+cfg-if = "1"
+derive_builder = "0.11.2"
+cinderella-terminal = { path = "../../cinderella-terminal", features = ["tui", "termion"] }
+

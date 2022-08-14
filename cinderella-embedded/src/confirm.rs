@@ -1,12 +1,11 @@
-use crate::{events::Event, value::DynamicValue};
+use crate::value::DynamicValue;
 use derive_builder::Builder;
 
-
-use termion::{event::Key::*};
+use cinderella_terminal::events::{Event, Key::*};
 use tui::{
     layout::{Constraint, Direction, Layout, Rect},
     style::{Color, Modifier, Style},
-    text::{Span},
+    text::Span,
     widgets::{Block, Borders},
     Frame,
 };
@@ -79,9 +78,8 @@ impl App {
     }
 
     pub fn confirm_event(&mut self, name: &str) -> Option<bool> {
-        #[cfg(feature = "termion")]
         return {
-            if let Event::Input(key) = self.events.recv().unwrap() {
+            if let Event::Keyboard(key) = self.events.recv().unwrap() {
                 match key {
                     Right => {
                         self.map

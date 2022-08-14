@@ -1,9 +1,8 @@
+use crate::value::DynamicValue;
+use cinderella_terminal::backend::auto::Auto;
+use cinderella_terminal::events::Event;
+use cinderella_terminal::interface::Backend;
 use std::{collections::HashMap, sync::mpsc, time::Duration};
-
-use crate::{
-    events::{events, Event},
-    value::DynamicValue,
-};
 
 pub struct App {
     pub events: mpsc::Receiver<Event>,
@@ -13,7 +12,7 @@ pub struct App {
 impl App {
     pub fn new(duration: Duration) -> Self {
         Self {
-            events: events(duration),
+            events: Auto::events(duration),
             map: HashMap::new(),
         }
     }

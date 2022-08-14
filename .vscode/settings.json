@@ -1,6 +1,3 @@
 {
-    "rust-analyzer.cargo.features": [
-        "termion",
-        "tui/termion"
-    ]
+    "rust-analyzer.cargo.features": "all"
 }
