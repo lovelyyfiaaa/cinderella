@@ -1,12 +1,12 @@
 use crate::{events::Event, value::DynamicValue};
 use derive_builder::Builder;
-use std::io::stdin;
 
-use termion::{event::Key::*, input::TermRead};
+
+use termion::{event::Key::*};
 use tui::{
     layout::{Constraint, Direction, Layout, Rect},
     style::{Color, Modifier, Style},
-    text::{Span, Text},
+    text::{Span},
     widgets::{Block, Borders},
     Frame,
 };
@@ -39,7 +39,7 @@ impl App {
         let block = Block::default()
             .title(
                 args.prompt
-                    .unwrap_or("Would you like to continue?".to_string()),
+                    .unwrap_or_else(|| "Would you like to continue?".to_string()),
             )
             .borders(Borders::ALL);
 
@@ -64,11 +64,11 @@ impl App {
             no_style
         }).add_modifier(Modifier::BOLD);
         let yes = Block::default().title(vec![Span::styled(
-            format!(" {} ", args.affirmative.unwrap_or("Yes".to_owned())),
+            format!(" {} ", args.affirmative.unwrap_or_else(|| "Yes".to_owned())),
             yes_style,
         )]);
         let no = Block::default().title(vec![Span::styled(
-            format!(" {} ", args.negative.unwrap_or("No".to_owned())),
+            format!(" {} ", args.negative.unwrap_or_else(|| "No".to_owned())),
             no_style,
         )]);
 

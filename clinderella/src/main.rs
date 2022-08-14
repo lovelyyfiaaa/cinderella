@@ -39,8 +39,7 @@ fn cli() -> Command<'static> {
 fn main() {
     let matches = cli().get_matches();
     let mut terminal = init_terminal().unwrap();
-    let mut app = App::new();
-    let mut return_with = 0;
+    let mut app = App::default();
     match matches.subcommand() {
         Some(("confirm", _sub_matches)) => {
             let prompt: Option<String> = matches
@@ -82,5 +81,4 @@ fn main() {
         _ => unimplemented!(),
     }
 
-    exit(return_with);
 }

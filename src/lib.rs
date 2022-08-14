@@ -7,8 +7,8 @@ use tui::Terminal;
 
 pub mod app;
 pub mod confirm;
-pub mod value;
 pub mod events;
+pub mod value;
 
 cfg_if! {
     if #[cfg(feature = "crossterm")] {
@@ -22,10 +22,11 @@ cfg_if! {
     }
 }
 
-
 cfg_if! {
     if #[cfg(feature = "termion")]{
-        pub fn init_terminal() -> Result<Terminal<TermionBackend<AlternateScreen<MouseTerminal<RawTerminal<Stdout>>>>>, std::io::Error> {
+        type InitReturn = Terminal<TermionBackend<AlternateScreen<MouseTerminal<RawTerminal<Stdout>>>>>;
+
+        pub fn init_terminal() -> Result<InitReturn, std::io::Error> {
             let stdout = io::stdout().into_raw_mode()?;
             let stdout = MouseTerminal::from(stdout);
             let stdout = AlternateScreen::from(stdout);
@@ -44,6 +45,4 @@ cfg_if! {
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-}
+mod tests {}

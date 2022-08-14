@@ -1,6 +1,4 @@
-use std::{cell::RefCell, collections::HashMap, rc::Rc, sync::mpsc, time::Duration};
-
-
+use std::{collections::HashMap, sync::mpsc, time::Duration};
 
 use crate::{
     events::{events, Event},
@@ -13,10 +11,16 @@ pub struct App {
 }
 
 impl App {
-    pub fn new() -> Self {
+    pub fn new(duration: Duration) -> Self {
         Self {
-            events: events(Duration::from_millis(250)),
+            events: events(duration),
             map: HashMap::new(),
         }
+    }
+}
+
+impl Default for App {
+    fn default() -> Self {
+        Self::new(Duration::from_millis(250))
     }
 }
