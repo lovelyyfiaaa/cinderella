@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 cinderella = { path = "../" }
+clap = { version = "3.2.16", features = ["derive"]}
+
