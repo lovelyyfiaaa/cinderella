@@ -1,4 +1,4 @@
-use cinderella::{app::App, init_terminal, confirm::ConfirmArgsBuilder};
+use cinderella::{app::App, confirm::ConfirmArgsBuilder, init_terminal};
 use clap::{arg, Command};
 use std::{path::PathBuf, process::exit};
 
@@ -25,7 +25,6 @@ fn cli() -> Command<'static> {
                     arg!(--negative [negative] "The title of the negative action"),
                     arg!(--default "Use the default action.")
                     ])
-               
                 .arg_required_else_help(true),
         )
         .subcommand(
@@ -49,7 +48,7 @@ fn main() {
             let negative: Option<String> = matches
                 .get_one("[negative]")
                 .map(|str: &String| str.to_owned());
-             
+
             let affirmative: Option<String> = matches
                 .get_one("[affirmative]")
                 .map(|str: &String| str.to_owned());
@@ -58,27 +57,28 @@ fn main() {
                 let negative = negative.clone();
                 let affirmative = affirmative.clone();
 
-                terminal.draw(|f| {
-                    app.confirm_render(f, None,
-                    "confirm", 
-                    ConfirmArgsBuilder::default()
-                            .prompt(prompt)
-                            .negative(negative)
-                            .affirmative(affirmative)
-                            .build().unwrap());
-                           
-
-                }).unwrap();
+                terminal
+                    .draw(|f| {
+                        app.confirm_render(
+                            f,
+                            None,
+                            "confirm",
+                            ConfirmArgsBuilder::default()
+                                .prompt(prompt)
+                                .negative(negative)
+                                .affirmative(affirmative)
+                                .build()
+                                .unwrap(),
+                        );
+                    })
+                    .unwrap();
 
                 if let Some(result) = app.confirm_event("confirm") {
-           
                     exit(if result { 0 } else { 1 });
-                 
                 };
-        }
+            }
         }
         None => unreachable!(),
         _ => unimplemented!(),
     }
-
 }
