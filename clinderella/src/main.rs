@@ -3,7 +3,7 @@ use clap::{arg, Command};
 use std::{path::PathBuf, process::exit};
 
 fn cli() -> Command<'static> {
-  Command::new("clinderella")
+    Command::new("clinderella")
         .about("Make beautiful CLI apps that are as beautiful as Cinderella!!! 💖✨✨")
         .subcommand_required(true)
         .arg_required_else_help(true)
@@ -36,49 +36,49 @@ fn cli() -> Command<'static> {
 }
 
 fn main() {
-  let matches = cli().get_matches();
-  let mut terminal = init_terminal().unwrap();
-  let mut app = App::default();
-  match matches.subcommand() {
-    Some(("confirm", _sub_matches)) => {
-      let prompt: Option<String> = matches
-        .get_one("[prompt]")
-        .map(|str: &String| str.to_owned());
+    let matches = cli().get_matches();
+    let mut terminal = init_terminal().unwrap();
+    let mut app = App::default();
+    match matches.subcommand() {
+        Some(("confirm", _sub_matches)) => {
+            let prompt: Option<String> = matches
+                .get_one("[prompt]")
+                .map(|str: &String| str.to_owned());
 
-      let negative: Option<String> = matches
-        .get_one("[negative]")
-        .map(|str: &String| str.to_owned());
+            let negative: Option<String> = matches
+                .get_one("[negative]")
+                .map(|str: &String| str.to_owned());
 
-      let affirmative: Option<String> = matches
-        .get_one("[affirmative]")
-        .map(|str: &String| str.to_owned());
-      loop {
-        let prompt = prompt.clone();
-        let negative = negative.clone();
-        let affirmative = affirmative.clone();
+            let affirmative: Option<String> = matches
+                .get_one("[affirmative]")
+                .map(|str: &String| str.to_owned());
+            loop {
+                let prompt = prompt.clone();
+                let negative = negative.clone();
+                let affirmative = affirmative.clone();
 
-        terminal
-          .draw(|f| {
-            app.confirm_render(
-              f,
-              None,
-              "confirm",
-              ConfirmArgsBuilder::default()
-                .prompt(prompt)
-                .negative(negative)
-                .affirmative(affirmative)
-                .build()
-                .unwrap(),
-            );
-          })
-          .unwrap();
+                terminal
+                    .draw(|f| {
+                        app.confirm_render(
+                            f,
+                            None,
+                            "confirm",
+                            ConfirmArgsBuilder::default()
+                                .prompt(prompt)
+                                .negative(negative)
+                                .affirmative(affirmative)
+                                .build()
+                                .unwrap(),
+                        );
+                    })
+                    .unwrap();
 
-        if let Some(result) = app.confirm_event("confirm") {
-          exit(if result { 0 } else { 1 });
-        };
-      }
+                if let Some(result) = app.confirm_event("confirm") {
+                    exit(if result { 0 } else { 1 });
+                };
+            }
+        }
+        None => unreachable!(),
+        _ => unimplemented!(),
     }
-    None => unreachable!(),
-    _ => unimplemented!(),
-  }
 }
