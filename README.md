@@ -1,5 +1,5 @@
 # Cinderella
-Make beautiful CLI apps that are as beautiful as Cinderella!!! 💖✨✨
+Make beautiful CLI apps that are as beautiful as Cinderella!!! 💖✨✨ Inspired by [Gum](https://github.com/charmbracelet/gum).
 
 
 ## License
